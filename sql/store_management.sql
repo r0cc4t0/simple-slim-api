@@ -40,7 +40,6 @@ VALUES ('Gamrise', '865-262-4548', '3606 Wiseman Street, Atlanta, GA');
 INSERT INTO stores (name, phone_number, address)
 VALUES ('Nothers', '208-893-0676', '563 Modoc Alley, Meridian, ID');
 
-
 CREATE TABLE products (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     store_id INT UNSIGNED NOT NULL,
@@ -51,7 +50,6 @@ CREATE TABLE products (
     CONSTRAINT fk_products_store_id_stores_id
     FOREIGN KEY(store_id) REFERENCES stores(id)
 );
-
 
 INSERT INTO products (store_id, name, price, quantity)
 VALUES (1, 'AMD Ryzen 7 3700X', 273.00, 25);
@@ -78,7 +76,7 @@ INSERT INTO products (store_id, name, price, quantity)
 VALUES (8, 'EVGA 750 BQ', 109.99, 35);
 
 INSERT INTO products (store_id, name, price, quantity)
-VALUES (9, 'Acer SB220Q bi 21.5"', 83.01, 20);
+VALUES (9, 'Acer SB220Q bi 21.5', 83.01, 20);
 
 INSERT INTO products (store_id, name, price, quantity)
 VALUES (10, 'Samsung 860 QVO', 109.99, 44);

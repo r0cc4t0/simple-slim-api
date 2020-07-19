@@ -2,6 +2,8 @@
 
 namespace app\DAO;
 
+use app\Models\ProductModel;
+
 class ProductsDAO extends Connection
 {
     public function __construct()
@@ -9,15 +11,55 @@ class ProductsDAO extends Connection
         parent::__construct();
     }
 
-    public function getAllProducts()
+    public function getAllProducts(): array
     {
         $products = $this->pdo
             ->query('SELECT * FROM products;')
             ->fetchAll(\PDO::FETCH_ASSOC);
-        echo "<pre>";
-        foreach ($products as $product) {
-            var_dump($product);
-        }
-        die;
+
+        return $products;
+    }
+
+    public function insertProduct(ProductModel $product): void
+    {
+        $statement = $this->pdo
+            ->prepare('INSERT INTO products 
+                VALUES (null, :store_id, :name, :price, :quantity);');
+
+        $statement->execute([
+            'store_id' => $product->getStoreId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+            'quantity' => $product->getQuantity()
+        ]);
+    }
+
+    public function updateProduct(ProductModel $product): void
+    {
+        $statement = $this->pdo
+            ->prepare('UPDATE products SET 
+                store_id = :store_id,
+                name = :name,
+                price = :price,
+                quantity = :quantity
+                WHERE id = :id;');
+
+        $statement->execute([
+            'store_id' => $product->getStoreId(),
+            'name' => $product->getName(),
+            'price' => $product->getPrice(),
+            'quantity' => $product->getQuantity(),
+            'id' => $product->getId()
+        ]);
+    }
+
+    public function deleteProduct(int $id): void
+    {
+        $statement = $this->pdo
+            ->prepare('DELETE FROM products WHERE id = :id;');
+
+        $statement->execute([
+            'id' => $id
+        ]);
     }
 }
