@@ -1,10 +1,13 @@
 <?php
 
-use function src\{slimConfiguration, basicAuth};
-
-use app\Controllers\{StoreController, ProductController};
+use function src\{slimConfiguration, basicAuth, jwtAuth};
+use app\Controllers\{StoreController, ProductController, AuthController};
+use app\Middlewares\JwtDateTimeMiddleware;
 
 $app = new \Slim\App(slimConfiguration());
+
+$app->post('/login', AuthController::class . ':login');
+$app->post('/refresh_token', AuthController::class . ':refreshToken');
 
 $app->group('', function () use ($app) {
     $app->get('/store', StoreController::class . ':getStores');
@@ -16,6 +19,9 @@ $app->group('', function () use ($app) {
     $app->post('/product', ProductController::class . ':insertProduct');
     $app->put('/product', ProductController::class . ':updateProduct');
     $app->delete('/product', ProductController::class . ':deleteProduct');
-})->add(basicAuth());
+})
+    //->add(basicAuth());
+    ->add(new JwtDateTimeMiddleware())
+    ->add(jwtAuth());
 
 $app->run();

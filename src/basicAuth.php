@@ -7,8 +7,8 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 function basicAuth(): HttpBasicAuthentication
 {
     return new HttpBasicAuthentication([
-        "users" => [
-            getenv('USER_BASIC_AUTH') => getenv('PASS_BASIC_AUTH')
+        'users' => [
+            'admin' => getenv('ADMIN_PASSWORD')
         ]
     ]);
 }

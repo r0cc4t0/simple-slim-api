@@ -80,3 +80,29 @@ VALUES (9, 'Acer SB220Q bi 21.5', 83.01, 20);
 
 INSERT INTO products (store_id, name, price, quantity)
 VALUES (10, 'Samsung 860 QVO', 109.99, 44);
+
+CREATE TABLE users (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(200) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+INSERT INTO users (name, email, password)
+VALUES ('William Mccormick', 'william.mccormick@inlook.com', '$argon2i$v=19$m=65536,t=4,p=1$QXRXVG4zb0FXaWh2azBONA$aVn2pmygmgcft/JiSbkMf7tV7ThTCsYqyl83uXwCbpM');
+
+INSERT INTO users (name, email, password)
+VALUES ('Serena Fischer', 'serena_fischer@coldmail.com', '$argon2i$v=19$m=65536,t=4,p=1$UjFwN2lyS09yNWxKWTEzbQ$CEQb4wOR+M3VYBSSP2M+LSWW42WBJ3GCiORph3pqjxM');
+
+CREATE TABLE tokens (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id INT UNSIGNED NOT NULL,
+    token VARCHAR(1000) NOT NULL,
+    refresh_token VARCHAR(1000) NOT NULL,
+    expired_at DATETIME NOT NULL,
+    active TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_tokens_user_id_users_id
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
