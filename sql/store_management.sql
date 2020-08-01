@@ -90,10 +90,10 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, email, password)
-VALUES ('William Mccormick', 'william.mccormick@inlook.com', '$argon2i$v=19$m=65536,t=4,p=1$QXRXVG4zb0FXaWh2azBONA$aVn2pmygmgcft/JiSbkMf7tV7ThTCsYqyl83uXwCbpM');
+VALUES ('William Mccormick', 'william.mccormick@inlook.com', '$argon2i$v=19$m=65536,t=4,p=1$aEtBblhtczNGRWswMG10Qg$N4/BVkHZPjFOgxz6iyPmX4O/K8xBkaX/7og2hHUevPc');
 
 INSERT INTO users (name, email, password)
-VALUES ('Serena Fischer', 'serena_fischer@coldmail.com', '$argon2i$v=19$m=65536,t=4,p=1$UjFwN2lyS09yNWxKWTEzbQ$CEQb4wOR+M3VYBSSP2M+LSWW42WBJ3GCiORph3pqjxM');
+VALUES ('Serena Fischer', 'serena_fischer@coldmail.com', '$argon2i$v=19$m=65536,t=4,p=1$c04zbnl2M3lZYTdQS3FaYw$hJTXcboh5OmlSetSX+Z1mmqLKA1vTEhRKcMO4P268tk');
 
 CREATE TABLE tokens (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
