@@ -1,7 +1,7 @@
 <?php
 
 use function src\{slimConfiguration, basicAuth, jwtAuth};
-use app\Controllers\{StoreController, ProductController, AuthController};
+use app\Controllers\{StoreController, ProductController, AuthController, UserController};
 use app\Middlewares\JwtDateTimeMiddleware;
 
 $app = new \Slim\App(slimConfiguration());
@@ -19,6 +19,11 @@ $app->group('', function () use ($app) {
     $app->post('/product', ProductController::class . ':insertProduct');
     $app->put('/product', ProductController::class . ':updateProduct');
     $app->delete('/product', ProductController::class . ':deleteProduct');
+
+    $app->get('/user', UserController::class . ':getUsers');
+    $app->post('/user', UserController::class . ':insertUser');
+    $app->put('/user', UserController::class . ':updateUser');
+    $app->delete('/user', UserController::class . ':deleteUser');
 })
     //->add(basicAuth());
     ->add(new JwtDateTimeMiddleware())

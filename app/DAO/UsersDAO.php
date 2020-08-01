@@ -27,4 +27,53 @@ class UsersDAO extends Connection
             ->setPassword($users[0]['password']);
         return $user;
     }
+
+    public function getAllUsers(): array
+    {
+        $users = $this->pdo
+            ->query('SELECT * FROM users;')
+            ->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $users;
+    }
+
+    public function insertUser(UserModel $user): void
+    {
+        $statement = $this->pdo
+            ->prepare('INSERT INTO users 
+            VALUES (null, :name, :email, :password);');
+
+        $statement->execute([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword()
+        ]);
+    }
+
+    public function updateUser(UserModel $user): void
+    {
+        $statement = $this->pdo
+            ->prepare('UPDATE users SET 
+                name = :name,
+                email = :email,
+                password = :password
+                WHERE id = :id;');
+
+        $statement->execute([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'id' => $user->getId()
+        ]);
+    }
+
+    public function deleteUser(int $id): void
+    {
+        $statement = $this->pdo
+            ->prepare('DELETE FROM users WHERE id = :id;');
+
+        $statement->execute([
+            'id' => $id
+        ]);
+    }
 }
