@@ -28,10 +28,18 @@ class TokensDAO extends Connection
     public function verifyRefreshToken(string $refreshToken): bool
     {
         $statement = $this->pdo
-            ->prepare('SELECT id FROM tokens WHERE refresh_token = :refresh_token;');
+            ->prepare('SELECT id FROM tokens WHERE refresh_token = :refresh_token AND active = 1;');
         $statement->bindParam('refresh_token', $refreshToken);
         $statement->execute();
         $tokens = $statement->fetchAll(\PDO::FETCH_ASSOC);
         return count($tokens) === 0 ? false : true;
+    }
+
+    public function disableToken(string $refreshToken): void
+    {
+        $statement = $this->pdo
+            ->prepare('UPDATE tokens SET active = 0 WHERE refresh_token = :refresh_token;');
+        $statement->bindParam('refresh_token', $refreshToken);
+        $statement->execute();
     }
 }

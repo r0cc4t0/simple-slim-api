@@ -73,6 +73,8 @@ final class AuthController
         $refreshTokenExists = $tokensDAO->verifyRefreshToken($refreshToken);
         if (!$refreshTokenExists) return $response->withStatus(401);
 
+        $tokensDAO->disableToken($refreshToken);
+
         $usersDAO = new UsersDAO();
         $user = $usersDAO->getUserByEmail($refreshTokenDecoded->email);
         if (is_null($user)) return $response->withStatus(401);
