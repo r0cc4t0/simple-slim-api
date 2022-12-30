@@ -20,6 +20,16 @@ class ProductsDAO extends Connection
         return $products;
     }
 
+    public function getProductById(int $id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM products WHERE id = :id');
+        $statement->bindParam('id', $id);
+        $statement->execute();
+        
+        $product = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $product;
+    }
+
     public function insertProduct(ProductModel $product): void
     {
         $statement = $this->pdo

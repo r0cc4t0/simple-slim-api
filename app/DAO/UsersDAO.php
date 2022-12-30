@@ -37,6 +37,16 @@ class UsersDAO extends Connection
         return $users;
     }
 
+    public function getUserById(int $id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM users WHERE id = :id');
+        $statement->bindParam('id', $id);
+        $statement->execute();
+
+        $user = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $user;
+    }
+
     public function insertUser(UserModel $user): void
     {
         $statement = $this->pdo

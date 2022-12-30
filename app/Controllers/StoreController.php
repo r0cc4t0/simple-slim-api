@@ -18,6 +18,18 @@ final class StoreController
         return $response;
     }
 
+    public function getStore(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getQueryParams();
+        $id = (int) $data['id'];
+        
+        $storesDAO = new StoresDAO();
+        $store = $storesDAO->getStoreById($id);
+
+        $response = $response->withJson($store);
+        return $response;
+    }
+
     public function insertStore(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();

@@ -18,6 +18,17 @@ final class UserController
         return $response;
     }
 
+    public function getUser(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getQueryParams();
+        $id = (int) $data['id'];
+        
+        $usersDAO = new UsersDAO();
+        $user = $usersDAO->getUserById($id);
+
+        $response = $response->withJson($user);
+        return $response;
+    }
 
     public function insertUser(Request $request, Response $response, array $args): Response
     {
@@ -36,7 +47,6 @@ final class UserController
         return $response;
     }
 
-
     public function updateUser(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
@@ -54,7 +64,6 @@ final class UserController
         ]);
         return $response;
     }
-
 
     public function deleteUser(Request $request, Response $response, array $args): Response
     {

@@ -18,6 +18,18 @@ final class ProductController
         return $response;
     }
 
+    public function getProduct(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getQueryParams();
+        $id = (int) $data['id'];
+        
+        $productsDAO = new ProductsDAO();
+        $product = $productsDAO->getProductById($id);
+
+        $response = $response->withJson($product);
+        return $response;
+    }
+
     public function insertProduct(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();

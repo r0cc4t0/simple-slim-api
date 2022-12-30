@@ -20,6 +20,16 @@ class StoresDAO extends Connection
         return $stores;
     }
 
+    public function getStoreById(int $id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM stores WHERE id = :id');
+        $statement->bindParam('id', $id);
+        $statement->execute();
+        
+        $store = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $store;
+    }
+
     public function insertStore(StoreModel $store): void
     {
         $statement = $this->pdo
