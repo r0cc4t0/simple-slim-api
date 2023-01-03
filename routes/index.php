@@ -1,10 +1,12 @@
 <?php
 
 use function src\{slimConfiguration, basicAuth, jwtAuth};
-use app\Controllers\{StoreController, ProductController, AuthController, UserController};
+use app\Controllers\{StoreController, ProductController, AuthController, UserController, ExceptionController};
 use app\Middlewares\JwtDateTimeMiddleware;
 
 $app = new \Slim\App(slimConfiguration());
+
+$app->get('/exception_test', ExceptionController::class . ':test');
 
 $app->post('/login', AuthController::class . ':login');
 $app->post('/refresh_token', AuthController::class . ':refreshToken');
